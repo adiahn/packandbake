@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { v4 as uuidv4 } from 'uuid';
 import { CartItem, Order, Product } from '../types';
 import { persist } from 'zustand/middleware';
 
@@ -6,42 +7,42 @@ import { persist } from 'zustand/middleware';
 const initialProducts: Product[] = [
   {
     id: '1',
-    name: 'Professional Mixing Bowl Set',
-    price: 39.99,
-    description: 'Set of 3 stainless steel mixing bowls in different sizes',
-    image: 'https://images.unsplash.com/photo-1584269360102-641c2ec5d442?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+    name: 'Professional Baking Mixer',
+    price: 48500, // Price in Naira
+    description: 'High-quality stand mixer perfect for all your baking needs. Includes multiple attachments.',
+    image: 'https://images.unsplash.com/photo-1594046243098-0fceea9d451e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     category: 'tool',
   },
   {
     id: '2',
-    name: 'Silicone Spatula Set',
-    price: 12.99,
-    description: 'Heat-resistant silicone spatulas for baking and cooking',
-    image: 'https://images.unsplash.com/photo-1610701066741-5991888a72ea?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+    name: 'Silicone Baking Mat Set',
+    price: 7200, // Price in Naira
+    description: 'Non-stick silicone mats for perfect cookies and pastries every time.',
+    image: 'https://images.unsplash.com/photo-1591261730799-ee4e6c5262b2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     category: 'tool',
   },
   {
     id: '3',
-    name: 'Digital Kitchen Scale',
-    price: 24.99,
-    description: 'Precise digital scale for measuring ingredients',
-    image: 'https://images.unsplash.com/photo-1591985666643-1ecc67616216?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-    category: 'tool',
-  },
-  {
-    id: '4',
     name: 'Chocolate Chip Cookies',
-    price: 8.99,
-    description: 'A dozen freshly baked chocolate chip cookies',
-    image: 'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+    price: 2500, // Price in Naira
+    description: 'Fresh-baked cookies with premium chocolate chips. Pack of 12.',
+    image: 'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     category: 'snack',
   },
   {
+    id: '4',
+    name: 'Baking Measurement Set',
+    price: 3800, // Price in Naira
+    description: 'Precise measuring cups and spoons for accurate baking.',
+    image: 'https://images.unsplash.com/photo-1616445207542-a07f98429f62?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+    category: 'tool',
+  },
+  {
     id: '5',
-    name: 'Cinnamon Rolls',
-    price: 14.99,
-    description: 'Pack of 6 homemade cinnamon rolls with cream cheese frosting',
-    image: 'https://images.unsplash.com/photo-1583491470871-3bc299407461?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+    name: 'Artisan Bread',
+    price: 3000, // Price in Naira
+    description: 'Freshly baked artisan sourdough bread. Made with organic flour.',
+    image: 'https://images.unsplash.com/photo-1586444248879-12445281372d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     category: 'snack',
   },
 ];
@@ -79,7 +80,7 @@ export const useStore = create<StoreState>()(
         set((state) => ({
           products: [
             ...state.products,
-            { ...product, id: Math.random().toString(36).substring(2, 9) },
+            { ...product, id: uuidv4() },
           ],
         })),
       updateProduct: (id, updates) =>
@@ -136,7 +137,7 @@ export const useStore = create<StoreState>()(
             ...state.orders,
             {
               ...order,
-              id: Math.random().toString(36).substring(2, 9),
+              id: uuidv4(),
               status: 'pending',
               createdAt: new Date(),
             },

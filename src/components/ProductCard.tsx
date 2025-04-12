@@ -6,6 +6,11 @@ interface ProductCardProps {
   product: Product;
 }
 
+// Function to format price in Naira
+const formatPrice = (price: number): string => {
+  return `₦${price.toLocaleString('en-NG')}`;
+};
+
 export function ProductCard({ product }: ProductCardProps) {
   const addToCart = useStore((state) => state.addToCart);
 
@@ -34,7 +39,7 @@ export function ProductCard({ product }: ProductCardProps) {
         <p className="text-gray-500 text-sm line-clamp-2 mb-4">{product.description}</p>
         
         <div className="flex items-center justify-between">
-          <span className="text-amber-600 font-semibold">${product.price.toFixed(2)}</span>
+          <span className="text-amber-600 font-semibold">{formatPrice(product.price)}</span>
           <button
             onClick={() => addToCart(product)}
             className="btn btn-sm btn-primary"

@@ -1,13 +1,21 @@
-import { ShoppingBag, Menu, X, ChefHat, User } from 'lucide-react';
+import { ShoppingBag, Menu, X, ChefHat, User, LogIn } from 'lucide-react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useStore } from '../store/useStore';
+import { useAuthStore } from '../store/authStore';
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const cart = useStore((state) => state.cart);
+  const { user, isAuthenticated, logout } = useAuthStore();
+  const navigate = useNavigate();
 
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
 
   return (
     <header className="bg-white border-b border-gray-100">
@@ -17,7 +25,7 @@ export function Navbar() {
           <Link to="/" className="flex-shrink-0 flex items-center">
             <ChefHat className="h-10 w-10 text-amber-600" />
             <div className="ml-3">
-              <span className="block font-display text-2xl font-semibold text-gray-900">
+              <span className="block font-script text-2xl font-semibold text-gray-900">
                 Packnbaketools
               </span>
               <span className="text-xs text-gray-500 mt-0">Premium Baking Essentials</span>
@@ -52,15 +60,37 @@ export function Navbar() {
                 )}
               </div>
             </Link>
-            <Link
-              to="/admin"
-              className="text-gray-700 hover:text-amber-600 px-3 py-2 text-sm font-medium transition-colors relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-amber-500 after:origin-center after:scale-x-0 hover:after:scale-x-100 after:transition-transform"
-            >
-              <div className="flex items-center">
-                <User className="w-5 h-5 mr-2" />
-                <span>Admin</span>
-              </div>
-            </Link>
+            
+            {isAuthenticated && user?.role === 'admin' && (
+              <Link
+                to="/admin"
+                className="text-gray-700 hover:text-amber-600 px-3 py-2 text-sm font-medium transition-colors relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-amber-500 after:origin-center after:scale-x-0 hover:after:scale-x-100 after:transition-transform"
+              >
+                <div className="flex items-center">
+                  <User className="w-5 h-5 mr-2" />
+                  <span>Admin</span>
+                </div>
+              </Link>
+            )}
+            
+            {!isAuthenticated ? (
+              <Link
+                to="/login"
+                className="text-gray-700 hover:text-amber-600 px-3 py-2 text-sm font-medium transition-colors relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-amber-500 after:origin-center after:scale-x-0 hover:after:scale-x-100 after:transition-transform"
+              >
+                <div className="flex items-center">
+                  <LogIn className="w-5 h-5 mr-2" />
+                  <span>Login</span>
+                </div>
+              </Link>
+            ) : (
+              <button
+                onClick={handleLogout}
+                className="text-gray-700 hover:text-amber-600 px-3 py-2 text-sm font-medium"
+              >
+                <span>Logout ({user?.name})</span>
+              </button>
+            )}
           </nav>
 
           {/* Mobile menu button */}
@@ -105,16 +135,42 @@ export function Navbar() {
                 <span>Cart ({totalItems})</span>
               </div>
             </Link>
-            <Link
-              to="/admin"
-              className="block px-3 py-3 text-base font-medium text-gray-700 hover:text-amber-600 hover:bg-gray-50 rounded-md"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              <div className="flex items-center">
-                <User className="w-5 h-5 mr-2" />
-                <span>Admin</span>
-              </div>
-            </Link>
+            
+            {isAuthenticated && user?.role === 'admin' && (
+              <Link
+                to="/admin"
+                className="block px-3 py-3 text-base font-medium text-gray-700 hover:text-amber-600 hover:bg-gray-50 rounded-md"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <div className="flex items-center">
+                  <User className="w-5 h-5 mr-2" />
+                  <span>Admin</span>
+                </div>
+              </Link>
+            )}
+            
+            {!isAuthenticated ? (
+              <Link
+                to="/login"
+                className="block px-3 py-3 text-base font-medium text-gray-700 hover:text-amber-600 hover:bg-gray-50 rounded-md"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <div className="flex items-center">
+                  <LogIn className="w-5 h-5 mr-2" />
+                  <span>Login</span>
+                </div>
+              </Link>
+            ) : (
+              <button
+                onClick={() => {
+                  handleLogout();
+                  setIsMenuOpen(false);
+                }}
+                className="block w-full text-left px-3 py-3 text-base font-medium text-gray-700 hover:text-amber-600 hover:bg-gray-50 rounded-md"
+              >
+                <span>Logout ({user?.name})</span>
+              </button>
+            )}
           </div>
         </div>
       )}

@@ -1,264 +1,185 @@
-import { Link } from 'react-router-dom';
-import { Package, ShoppingBag, ClipboardList, PieChart, Settings, ToggleLeft, ToggleRight, ChevronRight } from 'lucide-react';
+import { useState } from 'react';
+import { MoreVertical, Package, ShoppingCart, ChevronUp, ChevronDown, LogOut } from 'lucide-react';
 import { useStore } from '../store/useStore';
+import { useAuthStore } from '../store/authStore';
+import { Navigate } from 'react-router-dom';
 
 export function AdminDashboard() {
-  const products = useStore((state) => state.products);
   const orders = useStore((state) => state.orders);
-  const snacksAvailable = useStore((state) => state.snacksAvailable);
-  const toggleSnacksAvailability = useStore((state) => state.toggleSnacksAvailability);
+  const products = useStore((state) => state.products);
+  const { user, logout } = useAuthStore();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const toolsCount = products.filter((p) => p.category === 'tool').length;
-  const snacksCount = products.filter((p) => p.category === 'snack').length;
-  const pendingOrdersCount = orders.filter((o) => o.status === 'pending').length;
-  const totalOrdersCount = orders.length;
-  const revenue = orders.reduce((total, order) => {
-    return total + order.items.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
+  // Check if user is admin
+  if (!user || user.role !== 'admin') {
+    return <Navigate to="/" replace />;
+  }
+
+  const totalRevenue = orders.reduce((total, order) => {
+    return (
+      total +
+      order.items.reduce((orderTotal, item) => {
+        return orderTotal + item.product.price * item.quantity;
+      }, 0)
+    );
   }, 0);
 
-  const handleToggleSnacks = () => {
-    toggleSnacksAvailability();
+  const handleLogout = () => {
+    logout();
   };
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-10">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-1">Admin Dashboard</h1>
-          <p className="text-gray-500">Manage your products, orders, and business settings</p>
-        </div>
-        <button
-          onClick={handleToggleSnacks}
-          className={`mt-4 md:mt-0 flex items-center px-5 py-2.5 rounded-lg border transition-colors ${
-            snacksAvailable
-              ? 'bg-accent-50 border-accent-200 text-accent-700 hover:bg-accent-100'
-              : 'bg-gray-50 border-gray-200 text-gray-700 hover:bg-gray-100'
-          }`}
-        >
-          {snacksAvailable ? (
-            <>
-              <ToggleRight className="w-5 h-5 mr-2 text-accent-600" />
-              Snacks Available
-            </>
-          ) : (
-            <>
-              <ToggleLeft className="w-5 h-5 mr-2 text-gray-400" />
-              Snacks Unavailable
-            </>
-          )}
-        </button>
-      </div>
-
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-        <div className="bg-white rounded-xl shadow-soft p-6">
-          <div className="flex items-center">
-            <div className="p-3 rounded-lg bg-accent-100 text-accent-600 mr-4">
-              <PieChart className="w-7 h-7" />
-            </div>
-            <div>
-              <p className="text-sm font-medium text-gray-500">Total Revenue</p>
-              <p className="text-2xl font-bold text-gray-900">${revenue.toFixed(2)}</p>
-            </div>
-          </div>
-          <div className="mt-4 border-t border-gray-100 pt-4">
-            <div className="flex text-sm">
-              <span className="text-gray-500">All time</span>
-              <span className="ml-auto text-accent-600">{totalOrdersCount} orders</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-xl shadow-soft p-6">
-          <div className="flex items-center">
-            <div className="p-3 rounded-lg bg-brand-100 text-brand-600 mr-4">
-              <Package className="w-7 h-7" />
-            </div>
-            <div>
-              <p className="text-sm font-medium text-gray-500">Baking Tools</p>
-              <p className="text-2xl font-bold text-gray-900">{toolsCount}</p>
-            </div>
-          </div>
-          <div className="mt-4 border-t border-gray-100 pt-4">
-            <Link to="/admin/products?filter=tool" className="flex text-sm items-center text-brand-600">
-              <span>Manage tools</span>
-              <ChevronRight className="w-4 h-4 ml-1" />
-            </Link>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-xl shadow-soft p-6">
-          <div className="flex items-center">
-            <div className="p-3 rounded-lg bg-yellow-100 text-yellow-600 mr-4">
-              <ShoppingBag className="w-7 h-7" />
-            </div>
-            <div>
-              <p className="text-sm font-medium text-gray-500">Snacks</p>
-              <p className="text-2xl font-bold text-gray-900">{snacksCount}</p>
-            </div>
-          </div>
-          <div className="mt-4 border-t border-gray-100 pt-4">
-            <Link to="/admin/products?filter=snack" className="flex text-sm items-center text-yellow-600">
-              <span>Manage snacks</span>
-              <ChevronRight className="w-4 h-4 ml-1" />
-            </Link>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-xl shadow-soft p-6">
-          <div className="flex items-center">
-            <div className="p-3 rounded-lg bg-blue-100 text-blue-600 mr-4">
-              <ClipboardList className="w-7 h-7" />
-            </div>
-            <div>
-              <p className="text-sm font-medium text-gray-500">Pending Orders</p>
-              <p className="text-2xl font-bold text-gray-900">{pendingOrdersCount}</p>
-            </div>
-          </div>
-          <div className="mt-4 border-t border-gray-100 pt-4">
-            <Link to="/admin/orders?filter=pending" className="flex text-sm items-center text-blue-600">
-              <span>View pending orders</span>
-              <ChevronRight className="w-4 h-4 ml-1" />
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      {/* Quick Links Section */}
-      <h2 className="text-xl font-bold text-gray-900 mb-6">Quick Actions</h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-        <Link
-          to="/admin/products"
-          className="bg-white rounded-xl shadow-soft p-6 hover:shadow-hover transition-shadow"
-        >
-          <div className="flex items-center mb-4">
-            <div className="p-3 rounded-lg bg-brand-100 text-brand-600 mr-3">
-              <Package className="w-5 h-5" />
-            </div>
-            <h3 className="text-lg font-semibold text-gray-900">Manage Products</h3>
-          </div>
-          <p className="text-gray-600 mb-4 text-sm">
-            Add, edit, and remove products. Update inventory and product details.
-          </p>
-          <span className="inline-flex items-center text-brand-600 text-sm font-medium">
-            Go to Products 
-            <ChevronRight className="w-4 h-4 ml-1" />
-          </span>
-        </Link>
-
-        <Link
-          to="/admin/orders"
-          className="bg-white rounded-xl shadow-soft p-6 hover:shadow-hover transition-shadow"
-        >
-          <div className="flex items-center mb-4">
-            <div className="p-3 rounded-lg bg-blue-100 text-blue-600 mr-3">
-              <ClipboardList className="w-5 h-5" />
-            </div>
-            <h3 className="text-lg font-semibold text-gray-900">Manage Orders</h3>
-          </div>
-          <p className="text-gray-600 mb-4 text-sm">
-            View and manage customer orders. Update order status and process deliveries.
-          </p>
-          <span className="inline-flex items-center text-blue-600 text-sm font-medium">
-            Go to Orders 
-            <ChevronRight className="w-4 h-4 ml-1" />
-          </span>
-        </Link>
-
-        <div className="bg-white rounded-xl shadow-soft p-6 hover:shadow-hover transition-shadow">
-          <div className="flex items-center mb-4">
-            <div className="p-3 rounded-lg bg-gray-100 text-gray-600 mr-3">
-              <Settings className="w-5 h-5" />
-            </div>
-            <h3 className="text-lg font-semibold text-gray-900">Settings</h3>
-          </div>
-          <p className="text-gray-600 mb-4 text-sm">
-            Configure your store settings, delivery options, and notification preferences.
-          </p>
-          <button 
-            onClick={handleToggleSnacks}
-            className={`inline-flex items-center text-sm font-medium ${snacksAvailable ? 'text-accent-600' : 'text-gray-600'}`}
-          >
-            {snacksAvailable ? 'Disable Snacks' : 'Enable Snacks'}
-            <ChevronRight className="w-4 h-4 ml-1" />
-          </button>
-        </div>
-      </div>
-
-      {/* Recent Orders Preview */}
-      {orders.length > 0 && (
-        <div>
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold text-gray-900">Recent Orders</h2>
-            <Link to="/admin/orders" className="text-brand-600 text-sm font-medium flex items-center">
-              View all orders
-              <ChevronRight className="w-4 h-4 ml-1" />
-            </Link>
-          </div>
+    <div className="bg-gray-100 min-h-screen">
+      <header className="bg-white shadow">
+        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 flex justify-between items-center">
+          <h1 className="text-3xl font-bold tracking-tight text-gray-900 font-display">Admin Dashboard</h1>
           
-          <div className="bg-white rounded-xl shadow-soft overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Order ID
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Customer
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Date
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Status
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Total
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {orders.slice(0, 5).map((order) => {
-                    const orderTotal = order.items.reduce(
-                      (sum, item) => sum + item.product.price * item.quantity, 
-                      0
-                    );
-                    
-                    return (
-                      <tr key={order.id} className="hover:bg-gray-50">
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                          #{order.id.substring(0, 6)}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          {order.customerName}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          {new Date(order.createdAt).toLocaleDateString()}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium 
-                            ${order.status === 'pending' 
-                              ? 'bg-yellow-100 text-yellow-800' 
-                              : order.status === 'confirmed' 
-                                ? 'bg-blue-100 text-blue-800' 
-                                : 'bg-green-100 text-green-800'
-                            }`}>
-                            {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
-                          </span>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          ${orderTotal.toFixed(2)}
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+          <div className="relative">
+            <button 
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              className="flex items-center space-x-2 text-gray-700 hover:text-gray-900"
+            >
+              <span>Welcome, {user.name}</span>
+              {isDropdownOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+            </button>
+            
+            {isDropdownOpen && (
+              <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10">
+                <button 
+                  onClick={handleLogout}
+                  className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+                >
+                  <LogOut size={16} className="mr-2" />
+                  Logout
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      </header>
+      <main>
+        <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {/* Total Orders Card */}
+            <div className="bg-white overflow-hidden shadow rounded-lg">
+              <div className="p-5">
+                <div className="flex items-center">
+                  <div className="flex-shrink-0 bg-amber-100 rounded-md p-3">
+                    <ShoppingCart className="h-6 w-6 text-amber-600" aria-hidden="true" />
+                  </div>
+                  <div className="ml-5 w-0 flex-1">
+                    <dl>
+                      <dt className="text-sm font-medium text-gray-500 truncate">Total Orders</dt>
+                      <dd>
+                        <div className="text-lg font-medium text-gray-900 font-display">{orders.length}</div>
+                      </dd>
+                    </dl>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-gray-50 px-5 py-3">
+                <div className="text-sm">
+                  <a href="#orders" className="font-medium text-amber-700 hover:text-amber-900">
+                    View all
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Total Products Card */}
+            <div className="bg-white overflow-hidden shadow rounded-lg">
+              <div className="p-5">
+                <div className="flex items-center">
+                  <div className="flex-shrink-0 bg-purple-100 rounded-md p-3">
+                    <Package className="h-6 w-6 text-purple-600" aria-hidden="true" />
+                  </div>
+                  <div className="ml-5 w-0 flex-1">
+                    <dl>
+                      <dt className="text-sm font-medium text-gray-500 truncate">Total Products</dt>
+                      <dd>
+                        <div className="text-lg font-medium text-gray-900 font-display">{products.length}</div>
+                      </dd>
+                    </dl>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-gray-50 px-5 py-3">
+                <div className="text-sm">
+                  <a href="#products" className="font-medium text-purple-700 hover:text-purple-900">
+                    View all
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Total Revenue Card */}
+            <div className="bg-white overflow-hidden shadow rounded-lg">
+              <div className="p-5">
+                <div className="flex items-center">
+                  <div className="flex-shrink-0 bg-green-100 rounded-md p-3">
+                    <svg className="h-6 w-6 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <div className="ml-5 w-0 flex-1">
+                    <dl>
+                      <dt className="text-sm font-medium text-gray-500 truncate">Total Revenue</dt>
+                      <dd>
+                        <div className="text-lg font-medium text-gray-900 font-display">₦{totalRevenue.toLocaleString()}</div>
+                      </dd>
+                    </dl>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-gray-50 px-5 py-3">
+                <div className="text-sm">
+                  <a href="#revenue" className="font-medium text-green-700 hover:text-green-900">
+                    View details
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Recent Orders */}
+          <div className="mt-8">
+            <div className="bg-white shadow overflow-hidden sm:rounded-md">
+              <div className="px-4 py-5 border-b border-gray-200 sm:px-6">
+                <h3 className="text-lg leading-6 font-medium text-gray-900 font-display">Recent Orders</h3>
+              </div>
+              <ul className="divide-y divide-gray-200" id="orders">
+                {orders.slice(0, 5).map((order) => (
+                  <li key={order.id}>
+                    <div className="px-4 py-4 sm:px-6">
+                      <div className="flex items-center justify-between">
+                        <p className="text-sm font-medium text-amber-600 truncate">Order #{order.id.slice(0, 8)}</p>
+                        <div className="ml-2 flex-shrink-0 flex">
+                          <p className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                            {order.status}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="mt-2 sm:flex sm:justify-between">
+                        <div className="sm:flex">
+                          <p className="flex items-center text-sm text-gray-500">
+                            {order.items.length} items
+                          </p>
+                        </div>
+                        <div className="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
+                          <p>
+                            ₦{order.items.reduce((total, item) => total + item.product.price * item.quantity, 0).toLocaleString()}
+                          </p>
+                          <MoreVertical className="flex-shrink-0 ml-1 h-5 w-5 text-gray-400" aria-hidden="true" />
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>
-      )}
+      </main>
     </div>
   );
 } 

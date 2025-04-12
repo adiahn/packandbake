@@ -62,12 +62,12 @@ export function Footer() {
             <ul className="space-y-3">
               <li className="flex items-start">
                 <MapPin className="w-5 h-5 text-amber-300 mr-3 mt-0.5 flex-shrink-0" />
-                <span className="text-gray-400">123 Bakers Street, Suite 101<br />Bakingville, CA 90210</span>
+                <span className="text-gray-400">123 Bakers Street, Kaduna 101<br />Nigeria, CA 90210</span>
               </li>
               <li className="flex items-center">
                 <Phone className="w-5 h-5 text-amber-300 mr-3 flex-shrink-0" />
                 <a href="tel:+15551234567" className="text-gray-400 hover:text-amber-300 transition-colors">
-                  (555) 123-4567
+                  +234-8027127594
                 </a>
               </li>
               <li className="flex items-center">

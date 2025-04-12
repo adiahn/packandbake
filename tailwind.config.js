@@ -1,53 +1,40 @@
 /** @type {import('tailwindcss').Config} */
-export default {
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+module.exports = {
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}",
+  ],
   theme: {
     extend: {
-      colors: {
-        brand: {
-          50: '#f9f5f1',
-          100: '#f0e6dc',
-          200: '#e2cdb9',
-          300: '#d2af8f',
-          400: '#c49169',
-          500: '#b67a4c',
-          600: '#a46540',
-          700: '#864f36',
-          800: '#6c4030',
-          900: '#5b362c',
-          950: '#321b16',
-        },
-        accent: {
-          50: '#f1fcf7',
-          100: '#d3f8e8',
-          200: '#a7efd2',
-          300: '#73dfb6',
-          400: '#39c794',
-          500: '#1fa979',
-          600: '#188962',
-          700: '#176e4f',
-          800: '#175741',
-          900: '#144736',
-          950: '#0a2a20',
-        },
-      },
       fontFamily: {
-        sans: [
-          'Nunito Sans',
-          'system-ui',
-          '-apple-system',
-          'BlinkMacSystemFont',
-          'Segoe UI',
-          'Roboto',
-          'Helvetica Neue',
-          'Arial',
-          'sans-serif',
-        ],
-        display: [
-          'Playfair Display',
-          'Georgia',
-          'serif',
-        ],
+        sans: ['Poppins', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        display: ['Montserrat', 'ui-serif', 'Georgia', 'serif'],
+        script: ['Pacifico', 'cursive'],
+      },
+      colors: {
+        amber: {
+          50: '#fffbeb',
+          100: '#fef3c7',
+          200: '#fde68a',
+          300: '#fcd34d',
+          400: '#fbbf24',
+          500: '#f59e0b',
+          600: '#d97706',
+          700: '#b45309',
+          800: '#92400e',
+          900: '#78350f',
+        },
+        emerald: {
+          50: '#ecfdf5',
+          100: '#d1fae5',
+          200: '#a7f3d0',
+          300: '#6ee7b7',
+          400: '#34d399',
+          500: '#10b981',
+          600: '#059669',
+          700: '#047857',
+          800: '#065f46',
+          900: '#064e3b',
+        },
       },
       borderRadius: {
         'xl': '1rem',
