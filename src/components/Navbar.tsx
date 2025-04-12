@@ -28,7 +28,7 @@ export function Navbar() {
               <span className="block font-script text-2xl font-semibold text-gray-900">
                 Packnbaketools
               </span>
-              <span className="text-xs text-gray-500 mt-0">Premium Baking Essentials</span>
+              <span className="text-xs text-gray-500 mt-0">Premium Packaging Essentials</span>
             </div>
           </Link>
 
@@ -38,7 +38,7 @@ export function Navbar() {
               to="/tools"
               className="text-gray-700 hover:text-amber-600 px-3 py-2 text-sm font-medium transition-colors relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-amber-500 after:origin-center after:scale-x-0 hover:after:scale-x-100 after:transition-transform"
             >
-              Baking Tools
+              Packaging Tools
             </Link>
             <Link
               to="/snacks"
@@ -116,7 +116,7 @@ export function Navbar() {
               className="block px-3 py-3 text-base font-medium text-gray-700 hover:text-amber-600 hover:bg-gray-50 rounded-md"
               onClick={() => setIsMenuOpen(false)}
             >
-              Baking Tools
+              Packaging Tools
             </Link>
             <Link
               to="/snacks"

@@ -17,14 +17,14 @@ export function Home() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           <div className="max-w-3xl">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
-              Premium Baking Tools For Professional Results
+              Premium Packaging Tools For Professional Results
             </h1>
             <p className="text-xl text-white/80 mb-8 max-w-2xl">
-              Discover our collection of high-quality baking tools and delicious homemade snacks, crafted for both professionals and baking enthusiasts.
+              Discover our collection of high-quality packaging tools and delicious homemade snacks, crafted for both professionals and packaging enthusiasts.
             </p>
             <div className="flex flex-wrap gap-4">
               <Link to="/tools" className="btn btn-primary">
-                Shop Baking Tools
+                Shop Packaging Tools
               </Link>
               <Link to="/snacks" className="btn btn-outline bg-white/10 text-white border-white/20 hover:bg-white/20">
                 Explore Snacks
@@ -42,24 +42,24 @@ export function Home() {
               Why Choose Packnbaketools?
             </h2>
             <p className="text-xl text-gray-600">
-              We are passionate about providing premium quality baking supplies and 
+              We are passionate about providing premium quality packaging supplies and 
               occasionally sharing our delicious homemade snacks.
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
             <div className="bg-white p-8 rounded-xl shadow-soft text-center">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-brand-100 text-brand-600 mb-6">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-amber-100 text-amber-600 mb-6">
                 <ChefHat className="w-8 h-8" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-4">Professional Quality</h3>
               <p className="text-gray-600">
-                Our tools are designed to meet the standards of professional bakers, ensuring durability and precision.
+                Our tools are designed to meet the standards of professional packagers, ensuring durability and precision.
               </p>
             </div>
 
             <div className="bg-white p-8 rounded-xl shadow-soft text-center">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-accent-100 text-accent-600 mb-6">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 mb-6">
                 <Utensils className="w-8 h-8" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-4">Carefully Selected</h3>
@@ -74,7 +74,7 @@ export function Home() {
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-4">Fresh Baked Goods</h3>
               <p className="text-gray-600">
-                We regularly offer homemade snacks prepared with our very own baking tools and premium ingredients.
+                We regularly offer homemade snacks prepared with premium ingredients and proper packaging.
               </p>
             </div>
           </div>
@@ -89,7 +89,7 @@ export function Home() {
               Explore Our Categories
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              From essential baking tools to delicious homemade snacks, find everything you need.
+              From essential packaging tools to delicious homemade snacks, find everything you need.
             </p>
           </div>
 
@@ -100,14 +100,14 @@ export function Home() {
             >
               <img
                 src="https://images.unsplash.com/photo-1563897539633-7374c276c212?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
-                alt="Baking Tools"
+                alt="Packaging Tools"
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent"></div>
               <div className="relative p-8 w-full">
-                <h3 className="text-2xl font-bold text-white mb-2">Baking Tools</h3>
-                <p className="text-white/80 mb-4">Professional-grade tools for every baker</p>
-                <div className="flex items-center text-brand-300 font-medium">
+                <h3 className="text-2xl font-bold text-white mb-2">Packaging Tools</h3>
+                <p className="text-white/80 mb-4">Professional-grade tools for all packaging needs</p>
+                <div className="flex items-center text-amber-300 font-medium">
                   <span>Browse Collection</span>
                   <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
                 </div>
@@ -126,8 +126,8 @@ export function Home() {
               <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent"></div>
               <div className="relative p-8 w-full">
                 <h3 className="text-2xl font-bold text-white mb-2">Homemade Snacks</h3>
-                <p className="text-white/80 mb-4">Delicious treats baked with love</p>
-                <div className="flex items-center text-accent-300 font-medium">
+                <p className="text-white/80 mb-4">Delicious treats properly packaged with care</p>
+                <div className="flex items-center text-emerald-300 font-medium">
                   <span>View Availability</span>
                   <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
                 </div>
@@ -138,14 +138,14 @@ export function Home() {
       </section>
 
       {/* Newsletter Section */}
-      <section className="py-16 lg:py-24 bg-brand-50">
+      <section className="py-16 lg:py-24 bg-amber-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
               Stay Updated
             </h2>
             <p className="text-xl text-gray-600 mb-8">
-              Sign up to receive notifications about fresh snack availability and new baking tools.
+              Sign up to receive notifications about fresh snack availability and new packaging tools.
             </p>
             
             <form className="max-w-md mx-auto">
@@ -153,7 +153,7 @@ export function Home() {
                 <input
                   type="email"
                   placeholder="Enter your email"
-                  className="flex-grow px-4 py-3 rounded-lg border-gray-300 focus:ring-brand-500 focus:border-brand-500"
+                  className="flex-grow px-4 py-3 rounded-lg border-gray-300 focus:ring-amber-500 focus:border-amber-500"
                   required
                 />
                 <button

@@ -3,21 +3,21 @@ import { v4 as uuidv4 } from 'uuid';
 import { CartItem, Order, Product } from '../types';
 import { persist } from 'zustand/middleware';
 
-// Sample data for tools and snacks
+// Sample product data
 const initialProducts: Product[] = [
   {
     id: '1',
-    name: 'Professional Baking Mixer',
+    name: 'Professional Packaging Mixer',
     price: 48500, // Price in Naira
-    description: 'High-quality stand mixer perfect for all your baking needs. Includes multiple attachments.',
+    description: 'High-quality stand mixer perfect for all your packaging needs. Includes multiple attachments.',
     image: 'https://images.unsplash.com/photo-1594046243098-0fceea9d451e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     category: 'tool',
   },
   {
     id: '2',
-    name: 'Silicone Baking Mat Set',
+    name: 'Silicone Packaging Mat Set',
     price: 7200, // Price in Naira
-    description: 'Non-stick silicone mats for perfect cookies and pastries every time.',
+    description: 'Non-stick silicone mats for perfect packaging and product preparation every time.',
     image: 'https://images.unsplash.com/photo-1591261730799-ee4e6c5262b2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     category: 'tool',
   },
@@ -31,9 +31,9 @@ const initialProducts: Product[] = [
   },
   {
     id: '4',
-    name: 'Baking Measurement Set',
+    name: 'Packaging Measurement Set',
     price: 3800, // Price in Naira
-    description: 'Precise measuring cups and spoons for accurate baking.',
+    description: 'Precise measuring cups and spoons for accurate packaging measurement needs.',
     image: 'https://images.unsplash.com/photo-1616445207542-a07f98429f62?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     category: 'tool',
   },

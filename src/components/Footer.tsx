@@ -13,8 +13,8 @@ export function Footer() {
               <span className="ml-3 text-2xl font-display text-white">Packnbaketools</span>
             </div>
             <p className="text-gray-400 mb-6 max-w-md">
-              Offering premium quality baking tools and fresh homemade snacks for both professional 
-              bakers and baking enthusiasts. Quality products to elevate your baking experience.
+              Offering premium quality packaging tools and fresh homemade snacks for both professional 
+              packagers and packaging enthusiasts. Quality products to elevate your packaging experience.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-400 hover:text-amber-300 transition-colors">
@@ -40,7 +40,7 @@ export function Footer() {
               </li>
               <li>
                 <Link to="/tools" className="text-gray-400 hover:text-amber-300 transition-colors">
-                  Baking Tools
+                  Packaging Tools
                 </Link>
               </li>
               <li>

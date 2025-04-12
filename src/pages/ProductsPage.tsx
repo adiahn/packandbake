@@ -32,9 +32,9 @@ export function ProductsPage({ category }: ProductsPageProps) {
     setFilteredProducts(filtered);
   }, [products, category, snacksAvailable, sortOrder]);
 
-  const pageTitle = category === 'tool' ? 'Baking Tools' : 'Homemade Snacks';
+  const pageTitle = category === 'tool' ? 'Packaging Tools' : 'Homemade Snacks';
   const pageDescription = category === 'tool' 
-    ? 'Professional-grade tools designed for baking perfection' 
+    ? 'Professional-grade tools designed for packaging perfection' 
     : 'Delicious homemade treats prepared with love and premium ingredients';
 
   const heroImage = category === 'tool' 
@@ -65,22 +65,22 @@ export function ProductsPage({ category }: ProductsPageProps) {
         {category === 'snack' && (
           <div className={`mb-8 p-5 rounded-xl ${
             snacksAvailable 
-              ? 'bg-accent-50 border border-accent-200' 
+              ? 'bg-emerald-50 border border-emerald-200' 
               : 'bg-red-50 border border-red-200'
           }`}>
             <div className="flex items-center">
               {snacksAvailable ? (
-                <ShoppingBag className="h-6 w-6 text-accent-600 mr-3 flex-shrink-0" />
+                <ShoppingBag className="h-6 w-6 text-emerald-600 mr-3 flex-shrink-0" />
               ) : (
                 <AlertTriangle className="h-6 w-6 text-red-600 mr-3 flex-shrink-0" />
               )}
               <div>
-                <h3 className={`font-medium ${snacksAvailable ? 'text-accent-800' : 'text-red-800'}`}>
+                <h3 className={`font-medium ${snacksAvailable ? 'text-emerald-800' : 'text-red-800'}`}>
                   {snacksAvailable ? 'Snacks Available Today!' : 'Snacks Unavailable'}
                 </h3>
-                <p className={`text-sm ${snacksAvailable ? 'text-accent-700' : 'text-red-700'}`}>
+                <p className={`text-sm ${snacksAvailable ? 'text-emerald-700' : 'text-red-700'}`}>
                   {snacksAvailable 
-                    ? 'Our freshly baked snacks are available for order. Get them while supplies last!' 
+                    ? 'Our freshly made snacks are available for order. Get them while supplies last!' 
                     : 'Our homemade snacks are not available today. Please check back later or subscribe to get notified.'}
                 </p>
               </div>
